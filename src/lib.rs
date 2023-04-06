@@ -1,14 +1,14 @@
 use axum::{routing::get, Router};
-
+mod handlers;
 pub async fn start_server() -> Result<(), ()> {
-    let app = Router::new().
-        route("/ping", get(ping));
     axum::Server::bind(&"0.0.0.0:7001".parse().unwrap())
-        .serve(app.into_make_service())
+        .serve(app().into_make_service())
         .await
         .unwrap();
     Ok(())
 }
-async fn ping() -> String {
-    "pong".to_string()
+fn app() -> Router {
+    Router::new()
+        .route("/ping", get(handlers::ping::start))
+        .route("/echo/:msg", get(handlers::echo::start))
 }
