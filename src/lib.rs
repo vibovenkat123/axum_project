@@ -11,4 +11,5 @@ fn app() -> Router {
     Router::new()
         .route("/ping", get(handlers::ping::start))
         .route("/echo/:msg", get(handlers::echo::start))
+        .route("/multiply/:num1/:num2", get(handlers::multiply::start))
 }
